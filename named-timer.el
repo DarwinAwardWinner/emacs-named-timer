@@ -5,7 +5,7 @@
 ;; Filename: named-timer.el
 ;; Author: Ryan C. Thompson
 ;; Created: Sat Nov 10 16:52:30 2018 (-0800)
-;; Version:
+;; Version: 0.1
 ;; Package-Requires: ()
 ;; URL:
 ;; Keywords:
@@ -16,12 +16,14 @@
 ;;
 ;;; Commentary:
 
-;; This library provides two new functions, `run-with-named-timer' and
-;; `run-with-named-idle-timer'. They work like `run-with-timer' and
+;; This library provides two new functions, `named-timer-run' and
+;; `named-timer-idle-run'. They work like `run-with-timer' and
 ;; `run-with-idle-timer', except that they take an additional symbol
 ;; in front of all other arguments to use as name of the timer. The
 ;; main benefit of using a named timer is that re-using a name
 ;; automatically cancels the previous timer that was using that name.
+;; This simplifies the common pattern of cancelling and recreating the
+;; same timer when something changes.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
