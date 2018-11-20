@@ -6,10 +6,9 @@
 ;; Author: Ryan C. Thompson
 ;; Created: Sat Nov 10 16:52:30 2018 (-0800)
 ;; Version: 0.1
-;; Package-Requires: ()
-;; URL:
-;; Keywords:
-
+;; Package-Requires: ((emacs "24.4"))
+;; URL: https://github.com/DarwinAwardWinner/emacs-named-timer
+;; Keywords: tools
 ;; This file is NOT part of GNU Emacs.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -149,10 +148,8 @@ This works like `named-timer-run', but passes ARGS to
 (defalias 'run-with-named-idle-timer 'named-timer-idle-run)
 (defalias 'cancel-named-timer 'named-timer-cancel)
 
-(eval
- (if (macrop 'define-advice)
-     '(define-advice cancel-timer (:around (orig-fun &rest args) named-timer-cancel)
-        "Allow cancelling named timers by name.
+(defun cancel-timer@named-timer-cancel (orig-fun &rest args)
+  "Allow cancelling named timers by name.
 
 This advice allows `cancel-timer' to accept a symbol argument
 instead of a timer object. A symbol argument will be passed
@@ -162,16 +159,7 @@ name."
           (if (symbolp timer-or-name)
               (named-timer-cancel timer-or-name)
             (apply orig-fun args))))
-   '(defadvice cancel-timer (around named-timer-cancel activate)
-      "Allow cancelling named timers by name.
-
-This advice allows `cancel-timer' to accept a symbol argument
-instead of a timer object. A symbol argument will be passed
-instead to `named-timer-cancel' to cancel a timer with that
-name."
-      (if (symbolp timer)
-          (named-timer-cancel timer)
-        ad-do-it))))
+(advice-add 'cancel-timer :around #'cancel-timer@named-timer-cancel)
 
 (provide 'named-timer)
 
