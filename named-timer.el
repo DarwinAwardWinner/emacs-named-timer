@@ -98,6 +98,7 @@ Only one timer with a given name can be active. Calling this
 function on a name that is already associated with an existing
 timer will cancel the existing timer and replace it with the new
 one in `named-timer-table'."
+  (declare (indent 1))
   (cl-assert (symbolp name))
   (named-timer-cancel name t)
   (let ((timer (apply #'run-with-timer args)))
@@ -110,6 +111,7 @@ one in `named-timer-table'."
 This works like `named-timer-run', but passes ARGS to
 `run-with-idle-timer' instead. The timer is added to
 `named-timer-table' with NAME as the key."
+  (declare (indent 1))
   (cl-assert (symbolp name))
   (named-timer-cancel name t)
   (let ((timer (apply #'run-with-idle-timer args)))
