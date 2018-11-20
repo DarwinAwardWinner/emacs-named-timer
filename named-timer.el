@@ -148,18 +148,18 @@ This works like `named-timer-run', but passes ARGS to
 (defalias 'run-with-named-idle-timer 'named-timer-idle-run)
 (defalias 'cancel-named-timer 'named-timer-cancel)
 
-(defun cancel-timer@named-timer-cancel (orig-fun &rest args)
-  "Allow cancelling named timers by name.
+;; (defun cancel-timer@named-timer-cancel (orig-fun &rest args)
+;;   "Allow cancelling named timers by name.
 
-This advice allows `cancel-timer' to accept a symbol argument
-instead of a timer object. A symbol argument will be passed
-instead to `named-timer-cancel' to cancel a timer with that
-name."
-        (let ((timer-or-name (car args)))
-          (if (symbolp timer-or-name)
-              (named-timer-cancel timer-or-name)
-            (apply orig-fun args))))
-(advice-add 'cancel-timer :around #'cancel-timer@named-timer-cancel)
+;; This advice allows `cancel-timer' to accept a symbol argument
+;; instead of a timer object. A symbol argument will be passed
+;; instead to `named-timer-cancel' to cancel a timer with that
+;; name."
+;;         (let ((timer-or-name (car args)))
+;;           (if (symbolp timer-or-name)
+;;               (named-timer-cancel timer-or-name)
+;;             (apply orig-fun args))))
+;; (advice-add 'cancel-timer :around #'cancel-timer@named-timer-cancel)
 
 (provide 'named-timer)
 
